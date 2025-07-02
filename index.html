@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buon Compleanno!</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #fdf6e3;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      overflow: hidden;
+    }
+    .decor {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      background: url('https://www.transparenttextures.com/patterns/confetti.png');
+      opacity: 0.2; z-index: 1;
+    }
+    #message {
+      margin-top: 20vh;
+      font-size: 4rem;
+      color: #d6336c;
+      outline: none;
+      position: relative;
+      z-index: 2;
+    }
+    #message:focus {
+      border-bottom: 2px dashed #555;
+    }
+    #btn {
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+      font-size: 1.25rem;
+      background: #51cf66;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background .3s;
+      position: relative;
+      z-index: 2;
+    }
+    #btn:hover {
+      background: #38d9a9;
+    }
+    #feedback {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      color: #555;
+      min-height: 1.5em;
+      position: relative;
+      z-index: 2;
+    }
+    .balloon {
+      position: absolute;
+      bottom: -100px;
+      width: 60px;
+      height: 80px;
+      background: radial-gradient(circle at 30% 30%, #ff5e5e, #e60000);
+      border-radius: 50% 50% 45% 45%;
+      opacity: 0.8;
+      animation: float 10s infinite ease-in;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(-120vh) translateX(50px); opacity: 0; }
+    }
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      opacity: 0.8;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="decor"></div>
+
+  <!-- Palloncini -->
+  <script>
+    for (let i = 0; i < 10; i++) {
+      const balloon = document.createElement('div');
+      balloon.classList.add('balloon');
+      balloon.style.left = `${Math.random() * 100}%`;
+      balloon.style.animationDelay = `${Math.random() * 10}s`;
+      balloon.style.background = `radial-gradient(circle at 30% 30%, hsl(${Math.random()*360}, 90%, 70%), hsl(${Math.random()*360}, 90%, 50%))`;
+      document.body.appendChild(balloon);
+    }
+  </script>
+
+  <!-- Coriandoli -->
+  <script>
+    for (let i = 0; i < 50; i++) {
+      const conf = document.createElement('div');
+      conf.classList.add('confetti');
+      conf.style.left = `${Math.random() * 100}vw`;
+      conf.style.top = `${-Math.random() * 100}px`;
+      conf.style.backgroundColor = `hsl(${Math.random()*360}, 80%, 60%)`;
+      conf.style.animationDuration = `${3 + Math.random() * 5}s`;
+      conf.style.animationDelay = `${Math.random() * 5}s`;
+      document.body.appendChild(conf);
+    }
+  </script>
+
+  <h1 id="message" contenteditable="true" aria-label="Modifica il messaggio">
+    你点进来啦？发个祝福再走吧！
+  </h1>
+
+  <button id="btn">点我发送生日快乐！</button>
+  <div id="feedback" aria-live="polite"></div>
+
+  <script>
+    const btn = document.getElementById('btn');
+    const msg = document.getElementById('message');
+    const feedback = document.getElementById('feedback');
+
+    btn.addEventListener('click', () => {
+      const testo = msg.innerText.trim() || '…';
+      const ora = new Date().toLocaleTimeString('it-IT');
+
+      const imageUrl = 'image.png'; // ⬅️ Cambia questo URL con la tua immagine
+
+      feedback.innerHTML = `
+        🎉感谢帅哥 / 美女的祝福 么么哒🩵<br />
+        <img src="${imageUrl}" alt="Auguri" style="margin-top: 1rem; max-width: 90%; height: auto; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.2);" />
+      `;
+    });
+  </script>
+</body>
+</html>
